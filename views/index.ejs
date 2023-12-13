@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Extraction</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <h1>Text Extraction From Image</h1>
+    <div class="container">
+        <form action="/textfromimage" method="post" enctype="multipart/form-data">
+            <span>
+                <label for="file">Upload Image: </label>
+                <input type="file" name="file" id="" accept="image/*" onchange="previewImage(event)" required>
+            </span>
+            <button type="button" onclick="handleFormSubmission()">Extract Text</button>
+
+            <img id="preview" src="#" alt="Image Preview" />
+        </form>
+        <textarea name="" id="" cols="50" rows="20">
+            <%=data%>
+        </textarea>
+
+        <script>
+            // JavaScript function to preview the selected image
+            function previewImage(event) {
+                const input = event.target;
+                const preview = document.getElementById('preview');
+
+                if (input.files && input.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        preview.src = e.target.result;
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    preview.src = '#'; // Reset the image source if no file is selected
+                }
+            }
+
+            // Named function to handle form submission
+            function handleFormSubmission() {
+                // Retrieve the form element
+                const form = document.querySelector('form');
+
+                // Call the image preview function to ensure it's updated before form submission
+                previewImage({ target: form.querySelector('input[type="file"]') });
+
+                // Perform additional validation or actions if needed
+
+                // Allow the form to be submitted
+                form.submit();
+            }
+
+        </script>
+    </div>
+    <footer>Developed by Shakib & Fahim</footer>
+</body>
+
+</html>
